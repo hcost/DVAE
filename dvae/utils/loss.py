@@ -10,7 +10,7 @@ License agreement in LICENSE.txt
 import torch
 
 def loss_ISD(x, y):
-	y = y + 1e-8
+	y = y + 1e-5
 	ret = torch.sum(x/y - torch.log(x/y) - 1)
 	return ret
 
