@@ -221,7 +221,7 @@ class LearningAlgorithm():
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1).cuda()
 				recon_batch_data = torch.exp(self.model(batch_data))  # output log-variance
-				loss_recon = loss_ISD(batch_data+1e-5, recon_batch_data)
+				loss_recon = loss_ISD(batch_data+1e-8, recon_batch_data)
 				seq_len, bs, _ = self.model.z_mean.shape
 				loss_recon = loss_recon / (seq_len * bs)
 
@@ -230,7 +230,7 @@ class LearningAlgorithm():
 					loss_kl_v = loss_KLD(self.model.v_mean, self.model.v_logvar, self.model.v_mean_p, self.model.v_logvar_p)
 					loss_kl = loss_kl_z + loss_kl_v
 				else:
-					loss_kl = loss_KLD(self.model.z_mean, self.model.z_logvar, self.model.z_mean_p, self.model.z_logvar_p)
+					loss_kl = loss_KLD(self.model.z_mean+1e-8, self.model.z_logvar+1e-8, self.model.z_mean_p+1e-8, self.model.z_logvar_p+1e-8)
 				loss_kl = kl_warm * beta * loss_kl / (seq_len * bs)
 
 				loss_tot = loss_recon + loss_kl
