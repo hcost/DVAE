@@ -12,19 +12,15 @@ import torch
 def loss_ISD(x, y):
 	y += 1e-8
 	x += x + 1e-8
-	if x.isnan().any() or y.isnan().any():
-		print(x.isnan().sum(), y.isnan().sum())
-	else:
-		print(x.isnan().sum(), y.isnan().sum())
-	# 	return torch.tensor(0, device=x.device)
 	ret = torch.sum( x/y - torch.log(x/y) - 1)
 	return ret
 
 def loss_KLD(z_mean, z_logvar, z_mean_p=0, z_logvar_p=0):
-	if z_logvar.exp().isnan().any() or (z_mean - z_mean_p).pow(2).isnan().any() or z_logvar_p.exp().isnan().any():
-		ret = torch.tensor(0, device=z_mean.device)
-	else:
-		ret = -0.5 * torch.sum(z_logvar - z_logvar_p - torch.div(z_logvar.exp() + (z_mean - z_mean_p).pow(2)+1e-8, z_logvar_p.exp()+1e-8))
+	z_mean += 1e-8
+	z_logvar += 1e-8
+	z_mean_p += 1e-8
+	z_logvar_p += 1e-8
+	ret = -0.5 * torch.sum(z_logvar - z_logvar_p - torch.div(z_logvar.exp() + (z_mean - z_mean_p).pow(2)+1e-8, z_logvar_p.exp()))
 	return ret
 
 def loss_JointNorm(x, y, nfeats=3):
