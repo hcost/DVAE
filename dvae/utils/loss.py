@@ -16,11 +16,7 @@ def loss_ISD(x, y):
 	return ret
 
 def loss_KLD(z_mean, z_logvar, z_mean_p=0, z_logvar_p=0):
-	z_mean += 1e-8
-	z_logvar += 1e-8
-	z_mean_p += 1e-8
-	z_logvar_p += 1e-8
-	ret = -0.5 * torch.sum(z_logvar - z_logvar_p - torch.div(z_logvar.exp() + (z_mean - z_mean_p).pow(2)+1e-8, z_logvar_p.exp()))
+	ret = -0.5 * torch.sum(z_logvar - z_logvar_p - torch.div(z_logvar.exp() + (z_mean - z_mean_p).pow(2)+1e-8, z_logvar_p.exp()+1e-8))
 	return ret
 
 def loss_JointNorm(x, y, nfeats=3):
