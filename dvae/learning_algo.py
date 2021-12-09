@@ -221,7 +221,7 @@ class LearningAlgorithm():
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1).cuda()
 				recon_batch_data = torch.exp(self.model(batch_data))  # output log-variance
-				if self.model(batch_data).isnan().any():
+				if self.model.z_mean.isnan().any():
 					print('model output')
 					1/0
 				loss_recon = loss_ISD(batch_data, recon_batch_data)
