@@ -376,11 +376,12 @@ class CustomDataset(data.Dataset):
 		# Read wav files
 		x, sr = sf.read(self.prefix+self.df.filename[index]+'.wav')
 
+
 		# Sequence tailor
 		if not self.inference:
-			x = trim(x, self.trim_length*sr)
+			x = trim(x, int(self.trim_length*sr))
 		else:
-			x = trim_deterministic(x, self.trim_length*sr)
+			x = trim_deterministic(x, int(self.trim_length*sr))
 
 		# Normalize sequence
 		x = x / np.max(np.abs(x))
