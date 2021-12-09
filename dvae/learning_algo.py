@@ -237,6 +237,7 @@ class LearningAlgorithm():
 
 
 				loss_tot = loss_recon + loss_kl
+				print(loss_tot.isnan().sum())
 				loss_tot.backward()
 				optimizer.step()
 				optimizer.zero_grad()
