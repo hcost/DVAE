@@ -79,9 +79,9 @@ class LearningAlgorithm():
 		optimization  = self.cfg.get('Training', 'optimization')
 		lr = self.cfg.getfloat('Training', 'lr')
 		if optimization == 'adam': # could be extend to other optimizers
-			optimizer = torch.optim.Adam(self.model.parameters(), lr=lr)
+			optimizer = torch.optim.AdamW(self.model.parameters(), lr=lr)
 		else:
-			optimizer = torch.optim.Adam(self.model.parameters(), lr=lr)
+			optimizer = torch.optim.AdamW(self.model.parameters(), lr=lr)
 		return optimizer
 
 
@@ -219,11 +219,9 @@ class LearningAlgorithm():
 			for _, batch_data in enumerate(train_dataloader):
 
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
-				print(batch_data.shape)
 				batch_data = batch_data.permute(2, 0, 1)
 				output = self.model(batch_data)
 				recon_batch_data = torch.exp(output)  # output log-variance
-				print('output', output.isnan().sum())
 				loss_recon = loss_ISD(batch_data, recon_batch_data)
 				seq_len, bs, _ = self.model.z_mean.shape
 				loss_recon = loss_recon / (seq_len * bs)
@@ -238,9 +236,6 @@ class LearningAlgorithm():
 
 
 				loss_tot = loss_recon + loss_kl
-				print('loss tot', loss_tot.isnan().sum())
-				print('loss kl', loss_kl.isnan().sum())
-				print('loss_recon', loss_recon.isnan().sum())
 				loss_tot.backward()
 				optimizer.step()
 				optimizer.zero_grad()
