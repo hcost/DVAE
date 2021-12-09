@@ -10,9 +10,12 @@ License agreement in LICENSE.txt
 import torch
 
 def loss_ISD(x, y):
-	y = y + 1e-8
-	x = x + 1e-8
-	# if x.isnan().any() or y.isnan().any():
+	y += 1e-8
+	x += x + 1e-8
+	if x.isnan().any() or y.isnan().any():
+		print(x.isnan().sum(), y.isnan().sum())
+	else:
+		print(x.isnan().sum(), y.isnan().sum())
 	# 	return torch.tensor(0, device=x.device)
 	ret = torch.sum( x/y - torch.log(x/y) - 1)
 	return ret
