@@ -101,7 +101,7 @@ class LearningAlgorithm():
 
 		# Set module.training = True
 		self.model.train()
-		torch.autograd.set_detect_anomaly(True)
+		# torch.autograd.set_detect_anomaly(False)
 
 		# Create directory for results
 		if not self.params['reload']:
