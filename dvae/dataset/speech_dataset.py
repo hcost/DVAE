@@ -375,6 +375,7 @@ class CustomDataset(data.Dataset):
 
 		# Read wav files
 		x, sr = sf.read(self.prefix+self.df.filename[index]+'.wav')
+		print(x.shape)
 
 		# Sequence tailor
 		if not self.inference:
