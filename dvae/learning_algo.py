@@ -233,10 +233,11 @@ class LearningAlgorithm():
 					loss_kl = loss_KLD(self.model.z_mean, self.model.z_logvar, self.model.z_mean_p, self.model.z_logvar_p)
 				loss_kl = kl_warm * beta * loss_kl / (seq_len * bs)
 
+
 				loss_tot = loss_recon + loss_kl
-				optimizer.zero_grad()
 				loss_tot.backward()
 				optimizer.step()
+				optimizer.zero_grad()
 
 				train_loss[epoch] += loss_tot.item() * bs
 				train_recon[epoch] += loss_recon.item() * bs
