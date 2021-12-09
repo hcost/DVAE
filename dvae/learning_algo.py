@@ -24,7 +24,7 @@ import warnings
 from tqdm import tqdm
 
 
-def warn(**kwargs):
+def warn(*args, **kwargs):
 	pass
 warnings.warn = warn
 
