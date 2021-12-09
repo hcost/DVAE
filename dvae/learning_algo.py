@@ -204,9 +204,10 @@ class LearningAlgorithm():
 
 
 		# Train with mini-batch SGD
+		start_time = datetime.datetime.now()
 		for epoch in tqdm(range(start_epoch+1, epochs)):
 
-			start_time = datetime.datetime.now()
+
 
 			# KL warm-up
 			if epoch % 10 == 0 and kl_warm < 1:
