@@ -11,7 +11,7 @@ import torch
 
 def loss_ISD(x, y):
     y = y + 1e-10
-    ret = torch.sum( x/y - torch.log(x/y) - 1)
+    ret = torch.sum( x/y - torch.log(x/y + 1e-8) - 1 + 1e-8)
     return ret
 
 def loss_KLD(z_mean, z_logvar, z_mean_p=0, z_logvar_p=0):
