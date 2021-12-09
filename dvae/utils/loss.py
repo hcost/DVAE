@@ -15,7 +15,7 @@ def loss_ISD(x, y):
 	return ret
 
 def loss_KLD(z_mean, z_logvar, z_mean_p=0, z_logvar_p=0):
-	print(z_logvar.isnan().sum())
+	print(z_mean.isnan().sum())
 	print(torch.div(z_logvar.exp() + (z_mean - z_mean_p + 1e-8).pow(2), z_logvar_p.exp()+1e-8).isnan().sum())
 	ret = -0.5 * torch.sum(z_logvar - z_logvar_p - torch.div(z_logvar.exp() + (z_mean - z_mean_p + 1e-8).pow(2), z_logvar_p.exp()+1e-8))
 	return ret
