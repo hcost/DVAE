@@ -230,7 +230,7 @@ class LearningAlgorithm():
 					loss_kl_v = loss_KLD(self.model.v_mean, self.model.v_logvar, self.model.v_mean_p, self.model.v_logvar_p)
 					loss_kl = loss_kl_z + loss_kl_v
 				else:
-					loss_kl = loss_KLD(self.model.z_mean+1e-8, self.model.z_logvar+1e-8, self.model.z_mean_p+1e-8, self.model.z_logvar_p+1e-8)
+					loss_kl = loss_KLD(self.model.z_mean+1e-5, self.model.z_logvar+1e-5, self.model.z_mean_p+1e-5, self.model.z_logvar_p+1e-5)
 				loss_kl = kl_warm * beta * loss_kl / (seq_len * bs)
 
 				loss_tot = loss_recon + loss_kl
