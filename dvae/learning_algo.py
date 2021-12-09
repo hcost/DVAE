@@ -108,7 +108,8 @@ class LearningAlgorithm():
 
 		# Set module.training = True
 		self.model.train()
-		# torch.autograd.set_detect_anomaly(False)
+
+		torch.autograd.set_detect_anomaly(False)
 
 		# Create directory for results
 		if not self.params['reload']:
@@ -214,11 +215,7 @@ class LearningAlgorithm():
 
 
 			# Batch training
-			for batch_count, batch_data in enumerate(train_dataloader):
-				batch_data = batch_data.to(self.device)
-
-				if not batch_count % 5:
-					print(f'on train batch {batch_count}')
+			for _, batch_data in enumerate(train_dataloader):
 
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1)
