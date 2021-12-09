@@ -327,7 +327,7 @@ class CustomDataset(data.Dataset):
 		# data parameters
 		self.prefix = f'/home/harrison_kintsugihello_com/data/native_16_trim/'
 		self.df = df
-		self.trim_length = 2.4
+		self.trim_length = 2.0
 		self.name = name
 		self.shuffle = shuffle
 
