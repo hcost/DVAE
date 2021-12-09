@@ -220,7 +220,9 @@ class LearningAlgorithm():
 
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1)
-				recon_batch_data = torch.exp(self.model(batch_data))  # output log-variance
+				output = self.model(batch_data)
+				recon_batch_data = torch.exp(output)  # output log-variance
+				print('loss_recon', output.isnan().sum())
 				loss_recon = loss_ISD(batch_data, recon_batch_data)
 				seq_len, bs, _ = self.model.z_mean.shape
 				loss_recon = loss_recon / (seq_len * bs)
