@@ -20,6 +20,13 @@ import matplotlib.pyplot as plt
 from .utils import myconf, get_logger, loss_ISD, loss_KLD, loss_MPJPE
 from .dataset import h36m_dataset, speech_dataset
 from .model import build_VAE, build_DKF, build_STORN, build_VRNN, build_SRNN, build_RVAE, build_DSAE
+import warnings
+from tqdm import tqdm
+
+
+def warn(**kwargs):
+	pass
+warnings.warn = warn
 
 
 class LearningAlgorithm():
@@ -196,7 +203,7 @@ class LearningAlgorithm():
 
 
 		# Train with mini-batch SGD
-		for epoch in range(start_epoch+1, epochs):
+		for epoch in tqdm(range(start_epoch+1, epochs)):
 
 			start_time = datetime.datetime.now()
 
@@ -207,8 +214,11 @@ class LearningAlgorithm():
 
 
 			# Batch training
-			for _, batch_data in enumerate(train_dataloader):
+			for batch_count, batch_data in enumerate(train_dataloader):
 				batch_data = batch_data.to(self.device)
+
+				if not batch_count % 5:
+					print(f'on train batch {batch_count}')
 
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1)

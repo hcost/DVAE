@@ -374,8 +374,9 @@ class CustomDataset(data.Dataset):
 		"""
 
 		# Read wav files
-		x, sr = sf.read(self.prefix+self.df.filename[index]+'.wav')
-
+		# x, sr = sf.read(self.prefix+self.df.filename[index]+'.wav')
+		x, sr = torchaudio.load(self.prefix+self.df.filename[index]+'.wav')
+		x = x.squeeze()
 
 		# Sequence tailor
 		if not self.inference:
@@ -384,10 +385,10 @@ class CustomDataset(data.Dataset):
 			x = trim_deterministic(x, int(self.trim_length*sr))
 
 		# Normalize sequence
-		x = x / np.max(np.abs(x))
+		x = x / torch.max(torch.abs(x))
 
 		# STFT transformation
-		audio_spec = torch.stft(torch.from_numpy(x), n_fft=self.nfft, hop_length=self.hop,
+		audio_spec = torch.stft(x, n_fft=self.nfft, hop_length=self.hop,
 								win_length=self.wlen, window=self.win,
 								center=True, pad_mode='reflect', normalized=False, onesided=True)
 
