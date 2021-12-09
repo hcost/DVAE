@@ -27,7 +27,6 @@ def loss_JointNorm(x, y, nfeats=3):
 	ret = torch.sum(torch.norm(x-y, dim=-1))
 	return ret
 
-
 def loss_MPJPE(x, y, nfeats=3):
 	seq_len, bs, _ = x.shape
 	x = x.reshape(seq_len, bs, -1, nfeats)
