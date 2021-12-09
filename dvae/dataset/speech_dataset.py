@@ -58,9 +58,9 @@ def build_dataloader(cfg):
 
 	# Create dataloader
 	train_dataloader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,
-												shuffle=shuffle, num_workers=num_workers)
+												shuffle=shuffle, num_workers=num_workers, persistent_workers=True, pin_memory=True)
 	val_dataloader = torch.utils.data.DataLoader(val_dataset, batch_size=batch_size,
-												shuffle=shuffle, num_workers=num_workers)
+												shuffle=shuffle, num_workers=num_workers, persistent_workers=True, pin_memory=True)
 
 	return train_dataloader, val_dataloader, train_num, val_num
 
