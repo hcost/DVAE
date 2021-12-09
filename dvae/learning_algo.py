@@ -109,7 +109,7 @@ class LearningAlgorithm():
 		# Set module.training = True
 		self.model.train()
 
-		torch.autograd.set_detect_anomaly(False)
+		torch.autograd.set_detect_anomaly(True)
 
 		# Create directory for results
 		if not self.params['reload']:
@@ -219,7 +219,7 @@ class LearningAlgorithm():
 
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1).cuda()
-				recon_batch_data = torch.exp(self.model(batch_data)) # output log-variance
+				recon_batch_data = torch.exp(self.model(batch_data))  # output log-variance
 				loss_recon = loss_ISD(batch_data, recon_batch_data)
 				seq_len, bs, _ = self.model.z_mean.shape
 				loss_recon = loss_recon / (seq_len * bs)
