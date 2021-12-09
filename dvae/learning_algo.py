@@ -194,11 +194,12 @@ class LearningAlgorithm():
 			best_state_dict = self.model.state_dict()
 			best_optim_dict = optimizer.state_dict()
 
+		start_time = datetime.datetime.now()
 
 		# Train with mini-batch SGD
 		for epoch in range(start_epoch+1, epochs):
 
-			start_time = datetime.datetime.now()
+
 
 			# KL warm-up
 			if epoch % 10 == 0 and kl_warm < 1:
