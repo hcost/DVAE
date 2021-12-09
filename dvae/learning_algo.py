@@ -217,6 +217,7 @@ class LearningAlgorithm():
 
 			# Batch training
 			for _, batch_data in enumerate(train_dataloader):
+				print(_)
 
 				# (batch_size, x_dim, seq_len) -> (seq_len, batch_size, x_dim)
 				batch_data = batch_data.permute(2, 0, 1)
