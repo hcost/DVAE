@@ -385,7 +385,7 @@ class CustomDataset(data.Dataset):
 			x = trim_deterministic(x, int(self.trim_length*sr))
 
 		# Normalize sequence
-		# x = x / np.max(np.abs(x)+1e-8)
+		x = x / np.max(np.abs(x)+1e-8)
 
 		# STFT transformation
 		audio_spec = torch.stft(torch.from_numpy(x), n_fft=self.nfft, hop_length=self.hop,
